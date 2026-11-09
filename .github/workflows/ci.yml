@@ -1,0 +1,80 @@
+name: Lab 9 - Continuous Testing
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: build-output
+          path: |
+            dist/
+            reports/build.json
+          if-no-files-found: error
+  unit:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run test:unit
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: unit-reports
+          path: reports/
+          if-no-files-found: error
+  api:
+    needs: unit
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: delivery_variant08_test
+          POSTGRES_USER: delivery_student
+          POSTGRES_PASSWORD: lab9-ci-only
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U delivery_student -d delivery_variant08_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DB_HOST: 127.0.0.1
+      DB_PORT: '5432'
+      DB_NAME: delivery_variant08_test
+      DB_USER: delivery_student
+      DB_PASSWORD: lab9-ci-only
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run test:api
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: api-reports
+          path: reports/
+          if-no-files-found: error

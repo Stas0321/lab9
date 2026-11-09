@@ -1,0 +1,24 @@
+{
+  "private": true,
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "express": "5.1.0",
+    "pg": "8.13.3"
+  },
+  "devDependencies": {
+    "jest": "29.7.0"
+  },
+  "name": "lab9-ci",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "test:unit": "node scripts/test.js unit",
+    "test:api": "node scripts/test.js api",
+    "test": "npm run test:unit && npm run test:api",
+    "ci:local": "node scripts/pipeline.js",
+    "ci:fail": "node scripts/pipeline.js --fail",
+    "demo": "node scripts/demo.js"
+  }
+}

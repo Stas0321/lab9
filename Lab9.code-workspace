@@ -1,0 +1,99 @@
+{
+  "folders": [
+    {
+      "name": "Лабораторна №9",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "files.encoding": "utf8",
+    "files.exclude": {
+      "**/node_modules": true,
+      "**/.browsers": true,
+      "**/.git": true
+    }
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "ЛР9: Успішний локальний pipeline",
+        "type": "shell",
+        "command": "npm run ci:local",
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": [],
+        "presentation": {
+          "reveal": "always",
+          "panel": "dedicated"
+        }
+      },
+      {
+        "label": "ЛР9: Навмисний failed pipeline — exit 1",
+        "type": "shell",
+        "command": "npm run ci:fail",
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": [],
+        "presentation": {
+          "reveal": "always",
+          "panel": "dedicated"
+        }
+      },
+      {
+        "label": "ЛР9: Обидва сценарії",
+        "type": "shell",
+        "command": "npm run demo",
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": [],
+        "presentation": {
+          "reveal": "always",
+          "panel": "dedicated"
+        }
+      },
+      {
+        "label": "ЛР9: Build",
+        "type": "shell",
+        "command": "npm run build",
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": [],
+        "presentation": {
+          "reveal": "always",
+          "panel": "dedicated"
+        }
+      },
+      {
+        "label": "ЛР9: Unit tests",
+        "type": "shell",
+        "command": "npm run test:unit",
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": [],
+        "presentation": {
+          "reveal": "always",
+          "panel": "dedicated"
+        }
+      },
+      {
+        "label": "ЛР9: API tests",
+        "type": "shell",
+        "command": "npm run test:api",
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": [],
+        "presentation": {
+          "reveal": "always",
+          "panel": "dedicated"
+        }
+      }
+    ]
+  }
+}
